@@ -10,7 +10,7 @@ class Frame:
         self.isCompresed = isCompresed
         self.data = data
 
-        if data is bytes:
+        if type(data) is bytes:
             self.isCompresed = True
 
     def __getData(self) -> np.array:
@@ -22,8 +22,11 @@ class Frame:
 
         success, encoded_img = cv2.imencode(
             ".jpg",
-            self.__getData(),
-            [int(cv2.IMWRITE_JPEG_QUALITY), JPG_QUALITY],
+            cv2.cvtColor(
+                self.__getData(),
+                cv2.COLOR_BGRA2BGR
+            ),
+            [int(cv2.IMWRITE_JPEG_QUALITY), JPG_QUALITY]
         )
 
         if not success:

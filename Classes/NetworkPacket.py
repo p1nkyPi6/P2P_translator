@@ -3,6 +3,7 @@ import struct
 from Classes.Frame import Frame
 
 class NetworkPacket:
+        '''
         def __init__(self):
             self.__header = b''
             self.__body =b''
@@ -10,6 +11,7 @@ class NetworkPacket:
         def __init__(self, data: bytes):
             self.__header = len(data)
             self.__body = data
+        '''
 
         def __init__(self, data: Frame):
             encoded_data = Frame.CompressFrameToBytes(data)

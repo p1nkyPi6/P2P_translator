@@ -8,11 +8,17 @@ def main():
     frame_renderer = FrameRenderer()
 
     network_server.startService()
-    
-    while True:
-        network_server.readPacket()
-        frame_renderer.readFrame(network_server.getPacket())
-        frame_renderer.paintFrame()
+
+    try:
+        while not (frame_renderer.isClose() or network_server.isClose()):
+            network_server.readPacket()
+            if network_server.isClose():
+                break
+
+            frame_renderer.readFrame(network_server.getPacket())
+            frame_renderer.paintFrame()
+    finally:
+        network_server.closeService() 
 
 if __name__ == "__main__":
     try:

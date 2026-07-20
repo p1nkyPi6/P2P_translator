@@ -14,7 +14,9 @@ def main():
         network_client.addPacket(screen_capturer.returnFrame())
         network_client.sendPacket()
 
-        time.sleep(1 / 60)
+        if network_client.isClose():
+            network_client.close()
+            break
 
 if __name__ == "__main__":
     try:

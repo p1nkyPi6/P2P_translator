@@ -15,6 +15,7 @@ class NetWorkClient:
     def __init__(self):
         self.__network_packet_queue: Queue[NetworkPacket] = Queue()
         self.__socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.__isClose = False
 
         try:
             self.__socket.connect((HOST, PORT))
@@ -24,7 +25,25 @@ class NetWorkClient:
             print("Ошибка: Время ожидания ответа от сервера истекло.")
         except socket.error as e:
             print(f"Системная ошибка сокета: {e}")
+
+    def __getResponse(self):
+        response = self.__socket.recv(1024)
+
+        if response == b"Exit code":
+            print("Сервер закрыл соединение. Окончание сеанса")
+            self.__isClose = True
+
+        if response != b"Pass":
+            print(f"Неверный ответ от сервера: {response}. Ожидалось b'Pass'.")
+            self.__isClose = True
+
+        if not response:
+            print("Сервер закрыл соединение (получен пустой пакет).")
+            self.__isClose = True
             
+    def isClose(self) -> bool:
+        return self.__isClose
+    
     def close(self):
         self.__socket.close()
 
@@ -37,3 +56,5 @@ class NetWorkClient:
             return
 
         self.__socket.sendall(self.__network_packet_queue.get().getBytes())
+
+        self.__getResponse()
