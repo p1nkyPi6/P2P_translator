@@ -9,8 +9,6 @@ def main():
     network_client = NetWorkClient()
     screen_capturer = ScreenCapturer("MSS")
 
-    network_client.connect()
-
     while True:
 
         network_client.addPacket(screen_capturer.returnFrame())
