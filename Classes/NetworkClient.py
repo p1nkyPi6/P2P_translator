@@ -6,6 +6,7 @@ from Classes.Frame import Frame
 from Classes.NetworkPacket import NetworkPacket
 
 #Пока зашью это строго в код, потом сделаю подгрузку из конфига
+#HOST = "192.168.1.151"
 HOST = "127.0.0.1"
 PORT = 65432
 
