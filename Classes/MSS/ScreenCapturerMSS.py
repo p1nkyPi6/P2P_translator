@@ -3,9 +3,9 @@ import numpy as np
 
 from Classes.Frame import Frame
 
-from Classes.Interfaces._IInputStrategy import _IInputStrategy
+from Classes.Interfaces.InputStrategy import InputStrategy
 
-class _ScreenCapturerMSS(_IInputStrategy):
+class ScreenCapturerMSS(InputStrategy):
     def __init__(self):
         self.input = mss.MSS()
         

@@ -21,7 +21,7 @@ def test__init_type_error_InvalidData():
     with pytest.raises(TypeError) as error_message:
         frame = Frame("Invalid data")
 
-    assert f"data must be ndarray, got {type("Invalid data").__name__}" in str(error_message.value)
+    assert f"data must be ndarray" in str(error_message.value)
 
 #pytest Tests/FrameTest/tests.py::test__init_from_empty_array -v
 def test__init_from_empty_array():

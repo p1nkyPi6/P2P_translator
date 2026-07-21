@@ -2,17 +2,17 @@ from enum import Enum
 from queue import Queue
 
 from Classes.Frame import Frame
-from Classes.MSS._ScreenCapturerMSS import _ScreenCapturerMSS
-
-class _InputType(Enum):
-    MSS = "MSS"
+from Classes.MSS.ScreenCapturerMSS import ScreenCapturerMSS
 
 class ScreenCapturer():
+    class __InputType(Enum):
+        MSS = "MSS"
+
     __strategies = {
-        "MSS": _ScreenCapturerMSS()
+        "MSS": ScreenCapturerMSS()
     }
 
-    def __init__(self, input_type: _InputType = "MSS"):
+    def __init__(self, input_type: __InputType = "MSS"):
 
         strategy_class = self.__strategies.get(input_type)
         if not strategy_class:
