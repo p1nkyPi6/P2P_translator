@@ -31,7 +31,7 @@ def test_readFrame_wrong_type(test_image):
     with pytest.raises(TypeError) as error_message:
         frame_renderer.readFrame(test_image)
 
-    assert "data must be Frame" in str(error_message.value)
+    assert "'data' must be Frame" in str(error_message.value)
 
 #pytest Tests/FrameRendererTest/tests.py::test_printFrame_with_empty_queue -v
 def test_printFrame_with_empty_queue():

@@ -2,6 +2,7 @@ from queue import Queue
 from enum import Enum
 
 from utils.decorators import check_closed
+from utils.decorators import validate_types
 
 from Classes.CV2.FrameRendererCV2 import FrameRendererCV2
 from Classes.Frame import Frame
@@ -21,23 +22,11 @@ class FrameRenderer:
         
         self.__freme_render_queue: Queue[Frame] = Queue()
         self.__closeRender = False
-
-    def __validateRenderData(self, data) -> Frame:
-        # 1. Проверка None
-        if data is None:
-            raise TypeError("data cannot be None")
-
-        # 2. Проверка типа
-        if not isinstance(data, Frame):
-            raise TypeError(
-                f"data must be Frame, got {type(data).__name__}"
-            )
-        
-        return data
     
     @check_closed('isClose')
+    @validate_types(data=Frame)
     def readFrame(self, data: Frame):
-        frame = self.__validateRenderData(data)
+        frame = data
 
         if frame.isCompressed:
             self.__freme_render_queue.put(

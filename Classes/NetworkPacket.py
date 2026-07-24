@@ -1,23 +1,19 @@
 import struct
 
+from utils.decorators import validate_types
+
 from Classes.Frame import Frame
 
 class NetworkPacket:
-        '''
-        def __init__(self):
-            self.__header = b''
-            self.__body =b''
-
-        def __init__(self, data: bytes):
-            self.__header = len(data)
-            self.__body = data
-        '''
-
+        @validate_types(data=Frame)
         def __init__(self, data: Frame):
-            encoded_data = Frame.CompressFrameToBytes(data)
+            data.compress()
+            encoded_data = data.data
 
             self.__header = len(encoded_data)
             self.__body = encoded_data
 
-        def getBytes(self) -> bytes:
+        @property
+        def bytes(self) -> bytes:
+            '''Возвращает массив байт экземпляра класса'''
             return struct.pack('!i', self.__header) + self.__body.tobytes()

@@ -1,30 +1,23 @@
 import cv2
 import numpy as np
 
+from utils.decorators import validate_types
+
 #Пока зашью это строго в код, потом сделаю подгрузку из конфига
 JPG_QUALITY = 80
 
 class Frame:
 
+    @validate_types(data=np.ndarray)
     def __init__(self, data: np.ndarray):
-        self._data, self.__isCompressed = self.__validateData(data)
+        self.__data, self.__isCompressed = self.__validateData(data)
 
     def __validateData(self, data: np.ndarray) -> tuple[np.ndarray, bool]:
-        # 1. Проверка None
-        if data is None:
-            raise TypeError("data cannot be None")
-    
-        # 2. Проверка типа
-        if not isinstance(data, np.ndarray):
-            raise TypeError(
-                f"data must be ndarray, got {type(data).__name__}"
-            )
-    
-        # 3. Проверка размера
+        # 1. Проверка размера
         if data.size == 0:
             raise ValueError("data cannot be empty")
     
-        # 4. Проверка dtype
+        # 2. Проверка dtype
         if data.dtype != np.uint8:
             raise TypeError(
                 f"data dtype must be uint8, got {data.dtype}"
@@ -48,7 +41,7 @@ class Frame:
         success, encoded_img = cv2.imencode(
             ".jpg",
             cv2.cvtColor(
-                self._data,
+                self.__data,
                 cv2.COLOR_BGRA2BGR
             ),
             [int(cv2.IMWRITE_JPEG_QUALITY), JPG_QUALITY]
@@ -57,7 +50,7 @@ class Frame:
         if not success:
             raise ValueError("JPEG encoding failed")
     
-        self._data = encoded_img
+        self.__data = encoded_img
         self.__isCompressed = True
 
     def decompress(self):
@@ -66,20 +59,20 @@ class Frame:
             return
 
         decoded_img = cv2.imdecode(
-            np.frombuffer(self._data, np.uint8),
+            np.frombuffer(self.__data, np.uint8),
             cv2.IMREAD_COLOR
         )
 
         if decoded_img is None:
             raise ValueError("Can't decompress image from _data")
         
-        self._data = decoded_img
+        self.__data = decoded_img
         self.__isCompressed = False
 
     @property
     def data(self) -> np.ndarray:
         """Возвращает данные кадра."""
-        return self._data
+        return self.__data
 
     @property
     def isCompressed(self) -> bool:

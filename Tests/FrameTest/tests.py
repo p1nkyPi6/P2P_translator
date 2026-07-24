@@ -21,7 +21,7 @@ def test__init_type_error_InvalidData():
     with pytest.raises(TypeError) as error_message:
         frame = Frame("Invalid data")
 
-    assert f"data must be ndarray" in str(error_message.value)
+    assert f"'data' must be ndarray" in str(error_message.value)
 
 #pytest Tests/FrameTest/tests.py::test__init_from_empty_array -v
 def test__init_from_empty_array():
@@ -37,7 +37,7 @@ def test__init_from_array_of_wrong_datatype(test_image_with_uint32):
 
     assert f"data dtype must be uint8" in str(error_message.value)
     
-#
+#pytest Tests/FrameTest/tests.py::test__init_from_array_of_data -v
 def test__init_from_array_of_data(test_image_without_alpha):
     with pytest.raises(ValueError) as error_message:
         frame = Frame(test_image_without_alpha)
@@ -48,7 +48,7 @@ def test__init_from_array_of_data(test_image_without_alpha):
 # ================ ПОЗИТИВНЫЕ ТЕСТЫ =================
 # ===================================================
 
-#pytest Tests/FrameTest/tests.py::test__init_from_array -v
+#pytest Tests/FrameTest/tests.py::test__init_from_img -v
 def test__init_from_img(test_image):
     frame = Frame(test_image)
 

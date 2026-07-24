@@ -10,7 +10,6 @@ class ScreenCapturerMSS(InputStrategy):
         self.input = mss.MSS()
         
         #Пока зашью это строго в код, потом сделаю подгрузку из конфига
-        self.isDebgMode = True
         self.monitor = self.input.primary_monitor
 
     def returnFrame(self) -> Frame:

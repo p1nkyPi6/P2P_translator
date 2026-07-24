@@ -27,7 +27,7 @@ def test_image_without_alpha():
 def test_image():
     """Создаёт тестовое изображение 250x250."""
 
-    data = np.zeros((250, 250, 4), dtype=np.uint8)
+    data = np.zeros((250, 250, 4), dtype = np.uint8)
     
     data[:, :, 2] = 255  # R канал
     data[:, :, 3] = 255  # A канал
@@ -38,7 +38,7 @@ def test_image():
 def test_compress_image():
     """Создаёт тестовое изображение 250x250 и сжимает"""
 
-    data = np.zeros((250, 250, 4), dtype=np.uint8)
+    data = np.zeros((250, 250, 4), dtype = np.uint8)
     
     data[:, :, 2] = 255  # R канал
     data[:, :, 3] = 255  # A канал
